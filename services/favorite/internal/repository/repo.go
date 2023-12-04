@@ -14,7 +14,7 @@ func NewRepository(db *common.Database) *Repository {
 }
 
 func (ir *Repository) GetList(id int) ([]internal.Favorite, error) {
-	query := "SELECT * FROM favorite WHERE job_seeker_id = $1"
+	query := "SELECT * FROM favorite WHERE employer_id = $1"
 	rows, err := ir.DB.Connection.Query(query, id)
 	if err != nil {
 		return nil, err
@@ -31,18 +31,6 @@ func (ir *Repository) GetList(id int) ([]internal.Favorite, error) {
 	}
 
 	return favorites, nil
-}
-
-func (ir *Repository) Get(id int) (*internal.Favorite, error) {
-	query := "SELECT * FROM favorite WHERE id = $1"
-	row := ir.DB.Connection.QueryRow(query, id)
-
-	var favorite internal.Favorite
-	if err := row.Scan(&favorite.ID, &favorite.JobSeekerID, &favorite.EmployerID); err != nil {
-		return nil, err
-	}
-
-	return &favorite, nil
 }
 
 func (ir *Repository) Create(newFavorite *internal.Favorite) error {

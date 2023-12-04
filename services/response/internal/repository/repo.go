@@ -14,7 +14,7 @@ func NewRepository(db *common.Database) *Repository {
 }
 
 func (ir *Repository) GetList(id int) ([]internal.Response, error) {
-	query := "SELECT * FROM response r JOIN vacancy v ON r.vacancy_id = v.id WHERE v.employer_id = $1"
+	query := "SELECT * FROM response WHERE job_seeker_id = $1"
 	rows, err := ir.DB.Connection.Query(query, id)
 	if err != nil {
 		return nil, err
@@ -31,18 +31,6 @@ func (ir *Repository) GetList(id int) ([]internal.Response, error) {
 	}
 
 	return responses, nil
-}
-
-func (ir *Repository) Get(id int) (*internal.Response, error) {
-	query := "SELECT * FROM response WHERE id = $1"
-	row := ir.DB.Connection.QueryRow(query, id)
-
-	var response internal.Response
-	if err := row.Scan(&response.ID, &response.JobSeekerID, &response.VacancyID); err != nil {
-		return nil, err
-	}
-
-	return &response, nil
 }
 
 func (ir *Repository) Create(newResponse *internal.Response) error {

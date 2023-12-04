@@ -57,46 +57,6 @@ func GetList(w http.ResponseWriter, r *http.Request) {
 	w.Write(response)
 }
 
-func Get(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-
-	vars := mux.Vars(r)
-	id, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		http.Error(w, "Invalid ID", http.StatusBadRequest)
-		log.Println("Invalid ID:", err)
-		return
-	}
-
-	db, err := common.NewDatabase()
-	if err != nil {
-		http.Error(w, "Unable to connect to the database", http.StatusInternalServerError)
-		log.Println("Connection Error:", err)
-		return
-	}
-	defer db.Close()
-
-	repo := repository.NewRepository(db)
-
-	favorites, err := repo.Get(id)
-	if err != nil {
-		http.Error(w, "Error querying the database", http.StatusInternalServerError)
-		log.Println("Get Error:", err)
-		return
-	}
-
-	response, err := json.Marshal(favorites)
-	if err != nil {
-		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
-		log.Println("JSON Error:", err)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(response)
-}
-
 func Create(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
