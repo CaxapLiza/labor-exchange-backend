@@ -13,26 +13,6 @@ func NewRepository(db *common.Database) *Repository {
 	return &Repository{DB: db}
 }
 
-func (ir *Repository) GetList() ([]internal.Account, error) {
-	query := "SELECT * FROM account"
-	rows, err := ir.DB.Connection.Query(query)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var accounts []internal.Account
-	for rows.Next() {
-		var account internal.Account
-		if err := rows.Scan(&account.ID, &account.Login, &account.Password, &account.Role); err != nil {
-			return nil, err
-		}
-		accounts = append(accounts, account)
-	}
-
-	return accounts, nil
-}
-
 func (ir *Repository) Get(id int) (*internal.Account, error) {
 	query := "SELECT * FROM account WHERE id = $1"
 	row := ir.DB.Connection.QueryRow(query, id)

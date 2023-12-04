@@ -17,38 +17,6 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 }
 
-func GetList(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-
-	db, err := common.NewDatabase()
-	if err != nil {
-		http.Error(w, "Unable to connect to the database", http.StatusInternalServerError)
-		log.Println("Connection Error:", err)
-		return
-	}
-	defer db.Close()
-
-	repo := repository.NewRepository(db)
-
-	accounts, err := repo.GetList()
-	if err != nil {
-		http.Error(w, "Error querying the database", http.StatusInternalServerError)
-		log.Println("Get Error:", err)
-		return
-	}
-
-	response, err := json.Marshal(accounts)
-	if err != nil {
-		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
-		log.Println("JSON Error:", err)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(response)
-}
-
 func Get(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
