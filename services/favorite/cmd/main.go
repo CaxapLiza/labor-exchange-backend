@@ -25,5 +25,5 @@ func main() {
 	router.HandleFunc("/favorites/{id}", handler.Update).Methods("PUT", "OPTIONS")
 	router.HandleFunc("/favorites/{id}", handler.Delete).Methods("DELETE", "OPTIONS")
 
-	log.Fatal(http.ListenAndServe(":8082", router))
+	log.Fatal(http.ListenAndServe(":8083", router))
 }
