@@ -19,7 +19,7 @@ func main() {
 
 	router.Use(corsMiddleware)
 
-	router.HandleFunc("/favorites", handler.GetList).Methods("GET", "OPTIONS")
+	router.HandleFunc("/favorites/{id}", handler.GetList).Methods("GET", "OPTIONS")
 	router.HandleFunc("/favorites/{id}", handler.Get).Methods("GET", "OPTIONS")
 	router.HandleFunc("/favorites", handler.Create).Methods("POST", "OPTIONS")
 	router.HandleFunc("/favorites/{id}", handler.Update).Methods("PUT", "OPTIONS")

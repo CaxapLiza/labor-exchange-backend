@@ -20,6 +20,14 @@ func enableCors(w *http.ResponseWriter) {
 func GetList(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		log.Println("Invalid ID:", err)
+		return
+	}
+
 	db, err := common.NewDatabase()
 	if err != nil {
 		http.Error(w, "Unable to connect to the database", http.StatusInternalServerError)
@@ -30,7 +38,7 @@ func GetList(w http.ResponseWriter, r *http.Request) {
 
 	repo := repository.NewRepository(db)
 
-	favorites, err := repo.GetList()
+	favorites, err := repo.GetList(id)
 	if err != nil {
 		http.Error(w, "Error querying the database", http.StatusInternalServerError)
 		log.Println("Get Error:", err)

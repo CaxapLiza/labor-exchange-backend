@@ -13,9 +13,9 @@ func NewRepository(db *common.Database) *Repository {
 	return &Repository{DB: db}
 }
 
-func (ir *Repository) GetList() ([]internal.Favorite, error) {
-	query := "SELECT * FROM favorite"
-	rows, err := ir.DB.Connection.Query(query)
+func (ir *Repository) GetList(id int) ([]internal.Favorite, error) {
+	query := "SELECT * FROM favorite WHERE job_seeker_id = $1"
+	rows, err := ir.DB.Connection.Query(query, id)
 	if err != nil {
 		return nil, err
 	}

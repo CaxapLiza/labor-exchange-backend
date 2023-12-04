@@ -13,9 +13,9 @@ func NewRepository(db *common.Database) *Repository {
 	return &Repository{DB: db}
 }
 
-func (ir *Repository) GetList() ([]internal.Response, error) {
-	query := "SELECT * FROM response"
-	rows, err := ir.DB.Connection.Query(query)
+func (ir *Repository) GetList(id int) ([]internal.Response, error) {
+	query := "SELECT * FROM response r JOIN vacancy v ON r.vacancy_id = v.id WHERE v.employer_id = $1"
+	rows, err := ir.DB.Connection.Query(query, id)
 	if err != nil {
 		return nil, err
 	}
