@@ -62,7 +62,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	var requestBody struct {
 		JobSeekerID int `json:"job_seeker_id"`
-		VacancyID   int `json:"employer_id"`
+		VacancyID   int `json:"vacancy_id"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
@@ -114,7 +114,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 	var requestBody struct {
 		JobSeekerID int `json:"job_seeker_id"`
-		VacancyID   int `json:"employer_id"`
+		VacancyID   int `json:"vacancy_id"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {

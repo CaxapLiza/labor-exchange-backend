@@ -23,5 +23,5 @@ func main() {
 	router.HandleFunc("/analytics/employer", handler.GetEmployerResponsesCount).Methods("GET", "OPTIONS")
 	router.HandleFunc("/analytics/job_seeker", handler.GetJobSeekerFavoritesCount).Methods("GET", "OPTIONS")
 
-	log.Fatal(http.ListenAndServe(":8081", router))
+	log.Fatal(http.ListenAndServe(":8001", router))
 }

@@ -19,10 +19,10 @@ func main() {
 
 	router.Use(corsMiddleware)
 
-	router.HandleFunc("/responses/{id}", handler.GetList).Methods("GET", "OPTIONS")
+	router.HandleFunc("/responses/list/{id}", handler.GetList).Methods("GET", "OPTIONS")
 	router.HandleFunc("/responses", handler.Create).Methods("POST", "OPTIONS")
 	router.HandleFunc("/responses/{id}", handler.Update).Methods("PUT", "OPTIONS")
 	router.HandleFunc("/responses/{id}", handler.Delete).Methods("DELETE", "OPTIONS")
 
-	log.Fatal(http.ListenAndServe(":8085", router))
+	log.Fatal(http.ListenAndServe(":8005", router))
 }

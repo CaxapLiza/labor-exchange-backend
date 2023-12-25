@@ -48,7 +48,7 @@ func (ir *Repository) Get(id int) (*internal.Vacancy, error) {
 }
 
 func (ir *Repository) Create(newVacancy *internal.Vacancy) error {
-	query := "INSERT INTO vacancy (title, salary, description, employer_id) VALUES ($1, $2, $3) RETURNING id"
+	query := "INSERT INTO vacancy (title, salary, description, employer_id) VALUES ($1, $2, $3, $4) RETURNING id"
 	err := ir.DB.Connection.QueryRow(query, newVacancy.Title, newVacancy.Salary, newVacancy.Description, newVacancy.EmployerID).Scan(&newVacancy.ID)
 	return err
 }
